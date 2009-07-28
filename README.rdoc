@@ -1,0 +1,14 @@
+= The Clojure Gem
+
+http://github.com/technomancy/clojure-gem
+
+== Description
+
+Use Clojure's immutable data structures and Software Transactional
+Memory from Ruby. Don't be afraid of concurrency.
+
+== License
+
+Copyright (c) Phil Hagelberg
+
+Released under the Eclipse Public License. See file COPYING.

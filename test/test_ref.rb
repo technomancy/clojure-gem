@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + "/test_helper"
 
-class TestList < Clojure::TestCase
+class TestRef < Clojure::TestCase
   include Clojure
 
   def setup
@@ -27,5 +27,11 @@ class TestList < Clojure::TestCase
     Ref.dosync { @ref.alter(adder, 2) }
 
     assert_equal 5, @ref.deref
+  end
+
+  def test_set_outside_transaction
+    assert_raises(NativeException) do
+      @ref.set! 2
+    end
   end
 end

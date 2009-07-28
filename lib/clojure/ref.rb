@@ -19,7 +19,7 @@ module Clojure
     def alter(*args, &block)
       if block.nil?
         fn = args.shift
-        @ref.alter(fn.splat, List.new(args))
+        @ref.alter(fn.splat, List.new(args).list)
       else
         alter(*args.unshift(block))
       end
@@ -28,7 +28,7 @@ module Clojure
     def commute(*args, &block)
       if block.nil?
         fn = args.shift
-        @ref.commute(fn.splat, List.new(args))
+        @ref.commute(fn.splat, List.new(args).list)
       else
         commute(*args.unshift(block))
       end

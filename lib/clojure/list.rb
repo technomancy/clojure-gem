@@ -2,10 +2,17 @@ require "clojure/clojure-1.0.0.jar"
 
 module Clojure
   class List
-    import Java::clojure::lang::PersistentList
+    def self.proxy(obj)
+      return nil if obj.nil?
+      list = self.allocate
+      list.list = obj
+      list
+    end
+
+    attr_accessor :list
 
     def initialize(array)
-      @list = PersistentList::EMPTY
+      @list = Java::clojure::lang::PersistentList::EMPTY
       array.size.times do |i|
         @list = @list.cons(array[-i])
       end
@@ -15,25 +22,31 @@ module Clojure
       @list
     end
 
+    def inspect
+      @list.to_string
+    end
+
+    def cons(o)
+      List.proxy(@list.cons(o))
+    end
+
+    alias_method :conj, :cons
+
     # TODO: pull a lot of this stuff out to a Seq module
     def first
       @list.first
     end
 
     def next
-      @list.next
+      List.proxy(@list.next)
     end
 
     def rest
-      RT.more(@list)
+      List.proxy(RT.more(@list))
     end
 
     def seq
-      RT.seq(@list)
-    end
-
-    def cons(o)
-      @list.cons(o)
+      # Seq.proxy(RT.seq(@list))
     end
 
     def size

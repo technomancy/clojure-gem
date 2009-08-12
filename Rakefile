@@ -17,6 +17,7 @@ Hoe.spec('clojure') do
   developer('Phil Hagelberg', 'technomancy@gmail.com')
   self.readme_file = "README.rdoc"
   spec_extras[:platform] = "jruby"
+  extra_deps << ["minitest", ">= 1.4.2"]
 end
 
 # vim: syntax=Ruby

@@ -1,60 +1,27 @@
 require "clojure/clojure-1.0.0.jar"
 
 module Clojure
+  List = Java::clojure::lang::PersistentList
+
   class List
-    def self.proxy(obj)
-      return nil if obj.nil?
-      list = self.allocate
-      list.list = obj
-      list
-    end
-
-    attr_accessor :list
-
-    def initialize(array)
-      @list = Java::clojure::lang::PersistentList::EMPTY
+    def self.new(array)
+      list = EMPTY
       array.size.times do |i|
-        @list = @list.cons(array[-i])
+        list = list.cons(array[-i])
       end
+      return list
     end
 
-    def clj
-      @list
-    end
-
-    def inspect
-      @list.to_string
-    end
-
-    def cons(o)
-      List.proxy(@list.cons(o))
-    end
-
+    alias_method :inspect, :to_string
+    alias_method :size, :count
     alias_method :conj, :cons
 
-    # TODO: pull a lot of this stuff out to a Seq module
-    def first
-      @list.first
-    end
-
-    def next
-      List.proxy(@list.next)
-    end
-
     def rest
-      List.proxy(RT.more(@list))
-    end
-
-    def seq
-      # Seq.proxy(RT.seq(@list))
-    end
-
-    def size
-      @list.count
+      RT.more(self)
     end
 
     def empty?
-      size.zero?
+      count.zero?
     end
 
     include Enumerable

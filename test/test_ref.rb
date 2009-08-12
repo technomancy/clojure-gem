@@ -8,7 +8,7 @@ class TestRef < Clojure::TestCase
   end
 
   def test_set
-    Ref.dosync { @ref.set! 2 }
+    Ref.dosync { @ref.set 2 }
     assert_equal 2, @ref.deref
   end
 
@@ -31,7 +31,7 @@ class TestRef < Clojure::TestCase
 
   def test_set_outside_transaction
     assert_raises(NativeException) do
-      @ref.set! 2
+      @ref.set 2
     end
   end
 end

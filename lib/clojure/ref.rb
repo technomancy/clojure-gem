@@ -3,23 +3,16 @@ require "clojure/fn"
 require "clojure/list"
 
 module Clojure
+  Ref = Java::clojure::lang::Ref
+
   class Ref
-    def initialize(val)
-      @ref = Java::clojure::lang::Ref.new(val)
-    end
-
-    def deref
-      @ref.deref
-    end
-
-    def set!(val)
-      @ref.set(val)
-    end
+    alias_method :orig_alter, :alter
+    alias_method :orig_commute, :commute
 
     def alter(*args, &block)
       if block.nil?
         fn = args.shift
-        @ref.alter(fn.splat, List.new(args).list)
+        orig_alter(fn.splat, List.new(args))
       else
         alter(*args.unshift(block))
       end
@@ -28,7 +21,7 @@ module Clojure
     def commute(*args, &block)
       if block.nil?
         fn = args.shift
-        @ref.commute(fn.splat, List.new(args).list)
+        orig_commute(fn.splat, List.new(args))
       else
         commute(*args.unshift(block))
       end

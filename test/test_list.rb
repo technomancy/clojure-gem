@@ -28,4 +28,8 @@ class TestList < Clojure::TestCase
     # TODO: this should return a list
     assert_equal [4, 3, 2], @list3.map {|x| x + 1}
   end
+
+  def test_to_a
+    assert_equal [3, 2, 1], @list3.to_a
+  end
 end

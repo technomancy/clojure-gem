@@ -1,9 +1,12 @@
 require "clojure/clojure-1.0.0.jar"
+require "clojure/seq"
 
 module Clojure
   Map = Java::clojure::lang::IPersistentMap
 
   module Map
+    include Seq
+
     def self.new(hash)
       hash.inject(Java::clojure::lang::PersistentArrayMap::EMPTY) do |map, pair|
         map.assoc(*pair)

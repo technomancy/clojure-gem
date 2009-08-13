@@ -54,7 +54,9 @@ module Clojure
       RT.contains(self, key)
     end
 
-    # TODO: to_hash
+    def to_hash
+      inject({}) {|h, pair| h[pair.key] = pair.value; h }
+    end
   end
 
   # TODO: how to get my methods to override the Clojure ones?

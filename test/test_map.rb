@@ -56,4 +56,8 @@ class TestMap < Clojure::TestCase
   # def test_to_a
   #   assert_equal [[1, "one"], [2, "two"]], @map.to_a.sort
   # end
+
+  def test_to_hash
+    assert_equal({1 => "one", 2 => "two"}, @map.to_hash)
+  end
 end

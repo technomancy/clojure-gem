@@ -17,42 +17,49 @@ module Clojure
       RT.get(self, key)
     end
 
-    def assoc(*pairs)
-      raise "Need even number of key/value pairs" unless pairs.size % 2 == 0
-      return self if pairs.empty?
-      super(pairs[0], pairs[1]).assoc(*pairs[2 .. -1])
+    def assoc(key, value, *more)
+      if more.empty?
+        super(key, value)
+      else
+        super(key, value).assoc(*more)
+      end
     end
 
-    def dissoc(key)
-      # TODO: support many args
-      RT.dissoc(self, key)
+    def dissoc(key, *more)
+      if more.empty?
+        RT.dissoc(self, key)
+      else
+        RT.dissoc(self, key).dissoc(*more)
+      end
     end
 
-    def empty?
-      isEmpty
-    end
-
-    def merge(other)
+    def merge(other, *more)
       other = Map.new(other) if other.is_a?(Hash)
-      # TODO: support multiple args
-      RT.conj(self, other)
+      if more.empty?
+        RT.conj(self, other)
+      else
+        RT.conj(self.other).merge(*more)
+      end
     end
 
     def keys
-      RT.keys(self)
+      RT.keys(self).to_a
     end
 
     def values
-      RT.vals(self)
+      RT.vals(self).to_a
     end
 
-    alias_method :length, :count
-    alias_method :size, :count
-
-    def has_key?
+    def has_key?(key)
+      RT.contains(self, key)
     end
 
-    def each(&block)
-    end
+    # TODO: to_hash
   end
+
+  # TODO: how to get my methods to override the Clojure ones?
+  # Java::clojure::lang::PersistentArrayMap.send(:include, Map)
+  # Java::clojure::lang::PersistentHashMap.send(:include, Map)
+  # Java::clojure::lang::PersistentStructMap.send(:include, Map)
+  # Java::clojure::lang::PersistentTreeMap.send(:include, Map)
 end

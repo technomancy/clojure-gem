@@ -1,9 +1,5 @@
 module Clojure
   module Seq
-    def empty?
-      isEmpty
-    end
-
     def first
       RT.first(self)
     end
@@ -20,7 +16,6 @@ module Clojure
       RT.conj(self, obj)
     end
 
-    # TODO: some dumb module feature can reduce these to aliases
     def inspect
       toString
     end
@@ -33,6 +28,10 @@ module Clojure
       count
     end
 
+    def empty?
+      isEmpty
+    end
+
     include Enumerable
 
     def each(&block)
@@ -41,17 +40,28 @@ module Clojure
       rest.each(&block)
     end
 
-    # TODO: most enumerable methods should return clojure data
-    # structures rather than (yuck!) arrays.
+    def select(&block)
+      Clojure.var("filter").call(block, self)
+    end
+    alias_method :find_all, :select
+
+    def map(&block)
+      Clojure.var("map").call(block, self)
+    end
+    alias_method :collect, :map
+
+    def reject(&block)
+      select { |*args| not block.call(&args) }
+    end
 
     def <=>(other)
       Java::clojure::lang::Util.compare(clj, other.clj)
     end
 
-    # def to_a
-    #   a = []
-    #   each {|x| a << x}
-    #   return a
-    # end
+    def to_a
+      a = []
+      each {|x| a << x}
+      return a
+    end
   end
 end

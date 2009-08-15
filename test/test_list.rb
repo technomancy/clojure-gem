@@ -25,7 +25,6 @@ class TestList < Clojure::TestCase
   end
 
   def test_map
-    # TODO: this should return a list
     assert_equal [4, 3, 2], @list3.map {|x| x + 1}
   end
 

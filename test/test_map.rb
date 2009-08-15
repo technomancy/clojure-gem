@@ -50,14 +50,27 @@ class TestMap < Clojure::TestCase
     assert ! @map.has_key?(3)
   end
 
-  # def test_each
-  # end
+  def test_each
+    count = 0
 
-  # def test_to_a
-  #   assert_equal [[1, "one"], [2, "two"]], @map.to_a.sort
-  # end
+    @map.each do |k, v|
+      count += 1
+      assert k
+      assert_equal v, @map[k]
+    end
+
+    assert_equal 2, count
+  end
+
+  def test_to_a
+    assert_equal [[1, "one"], [2, "two"]], @map.to_a.sort
+  end
 
   def test_to_hash
     assert_equal({1 => "one", 2 => "two"}, @map.to_hash)
+  end
+
+  def test_map
+    @m2 = @map.map {|k, v| }
   end
 end

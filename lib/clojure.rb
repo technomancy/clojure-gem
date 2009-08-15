@@ -2,6 +2,7 @@ require "clojure/list.rb"
 require "clojure/vector.rb"
 require "clojure/map.rb"
 require "clojure/set.rb"
+require "clojure/lazy_seq.rb"
 
 require "clojure/ref.rb"
 

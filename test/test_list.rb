@@ -26,6 +26,7 @@ class TestList < Clojure::TestCase
 
   def test_map
     assert_equal [4, 3, 2], @list3.map {|x| x + 1}
+    # assert_equal [4, 3, 2], @list3.map(INC)
   end
 
   def test_to_a

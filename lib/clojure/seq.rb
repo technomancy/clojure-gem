@@ -40,19 +40,20 @@ module Clojure
       rest.each(&block)
     end
 
-    def select(&block)
-      Clojure.var("filter").call(block, self)
-    end
-    alias_method :find_all, :select
+    # TODO: doesn't accept a block for some reason. =P
+    # def map(&block)
+    #   Clojure.var("map").invoke(block, self)
+    # end
+    # alias_method :collect, :map
 
-    def map(&block)
-      Clojure.var("map").call(block, self)
-    end
-    alias_method :collect, :map
+    # def select(proc = nil, &block)
+    #   Clojure.var("filter").invoke(block, self)
+    # end
+    # alias_method :find_all, :select
 
-    def reject(&block)
-      select { |*args| not block.call(&args) }
-    end
+    # def reject(proc = nil, &block)
+    #   select { |*args| not block.call(&args) }
+    # end
 
     def <=>(other)
       Java::clojure::lang::Util.compare(clj, other.clj)

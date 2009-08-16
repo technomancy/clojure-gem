@@ -32,6 +32,10 @@ module Clojure
       isEmpty
     end
 
+    def ==(other)
+      Java::clojure::lang::Util.equiv(self, other)
+    end
+
     include Enumerable
 
     def each(&block)
@@ -40,9 +44,9 @@ module Clojure
       rest.each(&block)
     end
 
-    # TODO: doesn't accept a block for some reason. =P
+    # TODO: fix ClassCast problems to get lazy sequences working
     # def map(&block)
-    #   Clojure.var("map").invoke(block, self)
+    #   Clojure.var("map").invoke(Fn.from_proc(block), self)
     # end
     # alias_method :collect, :map
 

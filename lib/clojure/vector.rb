@@ -12,6 +12,7 @@ module Clojure
     end
 
     def [](index, to = nil)
+      return nil if empty?
       to, index = [index.first, index.last] if index.is_a? Range
 
       if to # must be slicing
@@ -25,6 +26,16 @@ module Clojure
       end
     end
 
-    # TODO: flatten, join, last, reverse, slice, uniq, to_a
+    def reverse
+      r = Vector.new([])
+      count.times { |i| r = r.conj(self[count - (i + 1)]) }
+      return r
+    end
+
+    def last
+      self[-1]
+    end
+
+    # TODO: slice, join, uniq, flatten
   end
 end

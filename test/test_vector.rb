@@ -27,6 +27,18 @@ class TestVector < Clojure::TestCase
   def test_lookup
     assert_equal 3, @vector3[2]
     assert_equal 3, @vector3[-1]
+    assert_equal 3, @vector3.last
+    assert_equal 1, @vector.last
+    assert_nil Vector.new([]).last
+    # TODO: range
+  end
+
+  def test_reverse
+    assert_equal Vector.new([3, 2, 1]), @vector3.reverse
+    assert_equal @vector, @vector.reverse
+  end
+
+  def test_slice
   end
 
   def test_map

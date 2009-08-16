@@ -5,5 +5,6 @@ class Proc
     p = self
     Proc.new {|args| p.call(*args)}
   end
-end
 
+  alias_method :invoke, :call
+end

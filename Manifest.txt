@@ -1,4 +1,5 @@
 .autotest
+.gitignore
 COPYING
 History.txt
 Manifest.txt
@@ -7,11 +8,15 @@ Rakefile
 lib/clojure.rb
 lib/clojure/clojure-1.0.0.jar
 lib/clojure/fn.rb
+lib/clojure/lazy_seq.rb
 lib/clojure/list.rb
 lib/clojure/map.rb
 lib/clojure/ref.rb
+lib/clojure/seq.rb
 lib/clojure/set.rb
 lib/clojure/vector.rb
 test/test_helper.rb
 test/test_list.rb
+test/test_map.rb
 test/test_ref.rb
+test/test_vector.rb

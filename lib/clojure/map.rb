@@ -17,14 +17,6 @@ module Clojure
       RT.get(self, key)
     end
 
-    def assoc(key, value, *more)
-      if more.empty?
-        super(key, value)
-      else
-        super(key, value).assoc(*more)
-      end
-    end
-
     def dissoc(key, *more)
       if more.empty?
         RT.dissoc(self, key)
@@ -75,10 +67,4 @@ module Clojure
       super.map{|pair| pair.to_a }
     end
   end
-
-  # TODO: how to get my methods to override the Clojure ones?
-  # Java::clojure::lang::PersistentArrayMap.send(:include, Map)
-  # Java::clojure::lang::PersistentHashMap.send(:include, Map)
-  # Java::clojure::lang::PersistentStructMap.send(:include, Map)
-  # Java::clojure::lang::PersistentTreeMap.send(:include, Map)
 end

@@ -13,9 +13,10 @@ module Clojure
       end
     end
 
-    def [](key)
+    def get(key)
       RT.get(self, key)
     end
+    alias_method :[], :get
 
     def dissoc(key, *more)
       if more.empty?

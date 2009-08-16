@@ -30,7 +30,9 @@ class TestVector < Clojure::TestCase
     assert_equal 3, @vector3.last
     assert_equal 1, @vector.last
     assert_nil Vector.new([]).last
-    # TODO: range
+    assert_equal @vector3, @vector3[0, 3]
+    assert_equal @vector, @vector3[0, 1]
+    assert @vector[1, 1].empty?
   end
 
   def test_reverse
@@ -38,7 +40,33 @@ class TestVector < Clojure::TestCase
     assert_equal @vector, @vector.reverse
   end
 
-  def test_slice
+  def test_join
+    assert_equal "1, 2, 3", @vector3.join(", ")
+  end
+
+  def test_uniq
+    assert_equal @vector3, @vector3.conj(2).uniq
+    assert_equal Vector.new([1]), Vector.new([1] * 9).uniq
+    assert_equal @vector3, @vector3.uniq
+  end
+
+  def test_flatten
+    assert_equal(Vector.new([1, 1, 2]),
+                 Vector.new([@vector, @vector2]).flatten)
+    assert_equal(Vector.new([1, 1, 2, 1, 2, 3]),
+                 Vector.new([@vector, @vector2,
+                             Vector.new([@vector3])]).flatten)
+    assert_equal @vector3, @vector3.flatten
+  end
+
+  def test_compact
+    assert Vector.new([nil]).compact.empty?
+    assert_equal Vector.new([1, 2]), Vector.new([1, nil, 2, nil]).flatten
+  end
+
+  def test_concat
+    assert_equal Vector.new([1, 1, 2, 3]), @vector.concat(@vector3)
+    assert_equal @vector, @vector.concat(Vector.new([]))
   end
 
   def test_map

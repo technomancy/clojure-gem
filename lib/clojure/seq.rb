@@ -45,6 +45,8 @@ module Clojure
     end
 
     # TODO: fix ClassCast problems to get lazy sequences working
+    # Do we want lazy versions of map/select as well as class-preserving?
+
     # def map(&block)
     #   Clojure.var("map").invoke(Fn.from_proc(block), self)
     # end

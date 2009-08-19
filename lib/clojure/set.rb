@@ -31,5 +31,29 @@ module Clojure
       each {|x| set = set.conj(block.call(x)) }
       return set
     end
+
+    def intersection(other)
+      Set.new(select{|x| other.contains?(x) })
+    end
+
+    def union(other)
+      new = self
+      other.each {|x| new = new.conj(x) }
+      new
+    end
+
+    def difference(other)
+      new = self
+      other.each {|x| new = new.disj(x) }
+      new
+    end
+
+    def subset?(other)
+      all? {|x| other.contains?(x) }
+    end
+
+    def superset?(other)
+      other.subset?(self)
+    end
   end
 end

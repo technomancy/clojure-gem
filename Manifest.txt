@@ -19,4 +19,5 @@ test/test_helper.rb
 test/test_list.rb
 test/test_map.rb
 test/test_ref.rb
+test/test_set.rb
 test/test_vector.rb

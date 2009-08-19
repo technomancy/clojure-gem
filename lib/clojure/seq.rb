@@ -56,6 +56,7 @@ module Clojure
     #   Clojure.var("filter").invoke(block, self)
     # end
     # alias_method :find_all, :select
+    # alias_method :filter, :select
 
     # def reject(proc = nil, &block)
     #   select { |*args| not block.call(&args) }

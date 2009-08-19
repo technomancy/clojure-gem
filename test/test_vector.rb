@@ -61,7 +61,7 @@ class TestVector < Clojure::TestCase
 
   def test_compact
     assert Vector.new([nil]).compact.empty?
-    assert_equal Vector.new([1, 2]), Vector.new([1, nil, 2, nil]).flatten
+    assert_equal Vector.new([1, 2]), Vector.new([1, nil, 2, nil]).compact
   end
 
   def test_concat

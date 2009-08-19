@@ -46,17 +46,37 @@ module Clojure
       rest.inject(first.to_s) {|s, x| s + str + x.to_s }
     end
 
-    # TODO: missing vector methods
     def uniq
+      set = Set.new([])
+      new = Vector.new([])
+      each do |x|
+        if !set.contains? x
+          new = new.conj(x)
+          set = set.conj(x)
+        end
+      end
+      new
     end
 
     def flatten
+      inject(EMPTY) do |acc, x|
+        if x.is_a? Seq
+          acc.concat(x.respond_to?(:flatten) ? x.flatten : x)
+        else
+          acc.conj(x)
+        end
+      end
     end
 
     def compact
+      Vector.new(select{|x| !x.nil? })
     end
 
     def concat(other)
+      new = EMPTY
+      each {|x| new = new.conj(x) }
+      other.each {|x| new = new.conj(x) }
+      new
     end
     alias_method :+, :concat
   end

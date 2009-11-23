@@ -34,4 +34,21 @@ class TestRef < Clojure::TestCase
       @ref.set 2
     end
   end
+
+  def test_threaded_refs
+    threads = []
+    inc = Proc.new {|v| v + 1 }
+
+    10.times do |i|
+      threads << Thread.new do
+        Ref.dosync do
+          @ref.commute {|v| v + 1 }
+          @ref.commute(inc)
+        end
+      end
+    end
+
+    threads.each { |t| t.join }
+    assert_equal 21, @ref.deref
+  end
 end

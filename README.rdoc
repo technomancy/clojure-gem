@@ -7,12 +7,20 @@ http://github.com/technomancy/clojure-gem
 Use Clojure's immutable data structures and Software Transactional
 Memory from Ruby. Don't be afraid of concurrency.
 
-Requires JRuby. Tested with 1.3.1+.
+Requires JRuby. Tested with 1.4.0+.
 
 Supports all four persistent collection types (lists, vectors, maps,
 and sets). Many enumerable methods still return Ruby arrays instead of
 the original type; this will be fixed. Lazy sequences are not yet
 supported.
+
+== Issues
+
+JRuby's way of nesting exceptions means that the exceptions used for
+transaction retries in dosync are not caught correctly. This may
+necessitate shipping a patched version of Clojure to fix. See the
+test_threaded_refs test in test_ref.rb for details; changing "commute"
+to "alter" makes it fail.
 
 == Examples
 
@@ -20,6 +28,6 @@ TODO: write examples
 
 == License
 
-Copyright (c) Phil Hagelberg
+Copyright (c) Phil Hagelberg 2009
 
 Released under the Eclipse Public License. See file COPYING.
